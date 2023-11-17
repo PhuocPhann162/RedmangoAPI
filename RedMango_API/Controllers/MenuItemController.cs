@@ -44,5 +44,17 @@ namespace RedMango_API.Controllers
             _response.StatusCode = HttpStatusCode.OK;
             return Ok(_response);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMenuItem(MenuItem menuItem)
+        {
+            if(menuItem == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+            }
+            _db.MenuItems.Add(menuItem); 
+        
+            return Ok(_response);
+        }
     }
 }
