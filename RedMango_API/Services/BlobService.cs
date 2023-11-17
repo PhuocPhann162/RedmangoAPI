@@ -15,7 +15,7 @@ namespace RedMango_API.Services
             return await blobClient.DeleteIfExistsAsync();
         }
 
-        public Task<string> GetBlob(string blobName, string containerName)
+        public async Task<string> GetBlob(string blobName, string containerName)
         {
             BlobContainerClient blobContainerClient = _blobClient.GetBlobContainerClient(containerName);
             BlobClient blobClient = blobContainerClient.GetBlobClient(blobName);
@@ -32,6 +32,11 @@ namespace RedMango_API.Services
                 ContentType = file.ContentType
             };
             var result = await blobClient.UploadAsync(file.OpenReadStream(), httpHeaders);
+            if(result != null)
+            {
+                return await GetBlob(blobName, containerName);
+            }
+            return "";
         }
     }
 }
