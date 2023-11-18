@@ -7,6 +7,10 @@ namespace RedMango_API.Services
     public class BlobService : IBlobService
     {
         private readonly BlobServiceClient _blobClient;
+        public BlobService(BlobServiceClient blobClient)
+        {
+            _blobClient = blobClient;
+        }
         public async Task<bool> DeleteBlob(string blobName, string containerName)
         {
             BlobContainerClient blobContainerClient = _blobClient.GetBlobContainerClient(containerName);
@@ -32,7 +36,7 @@ namespace RedMango_API.Services
                 ContentType = file.ContentType
             };
             var result = await blobClient.UploadAsync(file.OpenReadStream(), httpHeaders);
-            if(result != null)
+            if (result != null)
             {
                 return await GetBlob(blobName, containerName);
             }
