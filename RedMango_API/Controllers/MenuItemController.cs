@@ -17,8 +17,8 @@ namespace RedMango_API.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly IBlobService _blobService;
-
         private ApiResponse _response;
+
         public MenuItemController(ApplicationDbContext db, IBlobService blobService)
         {
             _db = db;
@@ -66,7 +66,7 @@ namespace RedMango_API.Controllers
                     {
                         _response.IsSuccess = false;
                         _response.StatusCode = HttpStatusCode.BadRequest;
-                        _response.ErrorMessages = new List<string>() { "File is required" };
+                        _response.ErrorMessages.Add("File is required");
                         return BadRequest(_response);
                     }
                     string fileName = $"{Guid.NewGuid()}{Path.GetExtension(menuItemCreateDTO.File.FileName)}";
@@ -118,7 +118,7 @@ namespace RedMango_API.Controllers
                     {
                         _response.IsSuccess = false;
                         _response.StatusCode = HttpStatusCode.NotFound;
-                        _response.ErrorMessages = new List<string>() { "Not found this menu item" };
+                        _response.ErrorMessages.Add("Not found this menu item");
                         return NotFound(_response);
                     }
                     menuItemFromDb.Name = menuItemUpdateDTO.Name;
@@ -170,7 +170,7 @@ namespace RedMango_API.Controllers
                 {
                     _response.IsSuccess = false;
                     _response.StatusCode = HttpStatusCode.NotFound;
-                    _response.ErrorMessages = new List<string>() { "Not found this menu item" };
+                    _response.ErrorMessages.Add("Not found this menu item");
                     return NotFound(_response);
                 }
 
