@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "/3Cr7i9M6VwCUvb0S519J0qtRcu8Fh0I+5NhuJpELYpNMPJ2Vz5HjLybJVYjR0m/IT/nIxbTIBoWAmE0+a22ww==",
+  "dgSpecHash": "IAHIVm1USwdGQPuXM70miguEO3gGEcgaVoscWHrtDbZU2T6/uD9HjUbdgjsNJtaJM76XkB5T5db9srG9p8wr5Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\Asus\\source\\repos\\ASPNET\\Fuco_RedMango_API\\RedMango_API\\RedMango_API\\RedMango_API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Asus\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\azure.core\\1.36.0\\azure.core.1.36.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\azure.storage.blobs\\12.19.1\\azure.storage.blobs.12.19.1.nupkg.sha512",
