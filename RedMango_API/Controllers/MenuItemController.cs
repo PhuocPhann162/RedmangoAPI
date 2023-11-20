@@ -43,7 +43,7 @@ namespace RedMango_API.Controllers
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 return BadRequest(_response);
             }
-            MenuItem menuItem = _db.MenuItems.FirstOrDefault(u => u.Id == id);
+            MenuItem menuItem = await _db.MenuItems.FirstOrDefaultAsync(u => u.Id == id);
             if (menuItem == null)
             {
                 _response.IsSuccess = false;
@@ -157,7 +157,6 @@ namespace RedMango_API.Controllers
         {
             try
             {
-
                 if (id == 0)
                 {
                     _response.IsSuccess = false;
@@ -188,7 +187,7 @@ namespace RedMango_API.Controllers
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string>() { ex.Message };
-
+                _response.StatusCode = HttpStatusCode.BadRequest;
             }
             return _response;
         }
