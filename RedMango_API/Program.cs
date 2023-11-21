@@ -1,3 +1,4 @@
+using AutoMapper;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -8,11 +9,13 @@ using Microsoft.OpenApi.Models;
 using RedMango_API.Data;
 using RedMango_API.Models;
 using RedMango_API.Services;
+using RedMango_API.Utility;
 using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Connect to database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDbConnection"));
@@ -20,10 +23,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddSingleton(u => new BlobServiceClient(builder.Configuration
     .GetConnectionString("StorageAccount")));
 
+// Blob Config
 builder.Services.AddSingleton<IBlobService, BlobService>();
+
+// Mapping Config
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Authentication Config
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-// Configure Password
+// Password Config
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = false;
@@ -33,6 +44,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
 });
 
+// JWT Token Config
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
 builder.Services.AddAuthentication(u =>
 {
@@ -56,6 +68,8 @@ builder.Services.AddCors();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+// Swagger Config for JWT
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
