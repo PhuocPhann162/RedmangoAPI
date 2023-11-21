@@ -20,7 +20,7 @@ namespace RedMango_API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
-        private ApiResponse _response;
+        protected ApiResponse _response;
         private string secretKey;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;

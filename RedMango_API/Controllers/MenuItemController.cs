@@ -17,7 +17,7 @@ namespace RedMango_API.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly IBlobService _blobService;
-        private ApiResponse _response;
+        protected ApiResponse _response;
 
         public MenuItemController(ApplicationDbContext db, IBlobService blobService)
         {
