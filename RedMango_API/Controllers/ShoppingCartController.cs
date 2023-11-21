@@ -19,6 +19,47 @@ namespace RedMango_API.Controllers
             _db = db;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<ApiResponse>> GetShoppingCart(string userId)
+        {
+            try
+            {
+                if(string.IsNullOrEmpty(userId))
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
+                    return BadRequest(_response);
+                }
+                ShoppingCart shoppingCart = _db.ShoppingCarts.
+                    Include(u => u.CartItems).ThenInclude(u => u.MenuItem).
+                    FirstOrDefault(u => u.UserId == userId);
+
+                if (shoppingCart == null)
+                {
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.IsSuccess = false;
+                    return NotFound(_response);
+                }
+
+                if(shoppingCart.CartItems != null && shoppingCart.CartItems.Count > 0)
+                {
+                    shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => u.Quantity * u.MenuItem.Price);
+                }
+
+                _response.Result = shoppingCart;
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }
+            catch(Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.Message };
+            }
+            
+            return Ok(_response);
+        }
+
         [HttpPost]
         public async Task<ActionResult<ApiResponse>> AddOrUpdateItemInCart(string userId, int menuItemId, int updateQuantityBy)
         {
@@ -84,7 +125,7 @@ namespace RedMango_API.Controllers
                     {
                         // remove cart item from cart and if it is the only item then remove cart 
                         _db.CartItems.Remove(cartItemInCart);
-                        if(shoppingCart.CartItems.Count() == 1)
+                        if (shoppingCart.CartItems.Count() == 1)
                         {
                             _db.ShoppingCarts.Remove(shoppingCart);
                         }
