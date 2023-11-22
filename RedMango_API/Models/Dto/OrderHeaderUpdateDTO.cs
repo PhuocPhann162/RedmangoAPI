@@ -10,8 +10,7 @@ namespace RedMango_API.Models.Dto
         public string PickupPhoneNumber { get; set; }
         public string PickupEmail { get; set; }
 
-        public DateTime OrderDate { get; set; }
-        public string StripePaymentStatus { get; set; }
+        public string StripePaymentIntentID { get; set; }
         public string Status { get; set; }
     }
 }

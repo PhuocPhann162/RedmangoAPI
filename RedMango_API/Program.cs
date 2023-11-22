@@ -15,23 +15,23 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Connect to database
+// Connect to SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDbConnection"));
 });
-builder.Services.AddSingleton(u => new BlobServiceClient(builder.Configuration
-    .GetConnectionString("StorageAccount")));
 
 // Blob Config
 builder.Services.AddSingleton<IBlobService, BlobService>();
+builder.Services.AddSingleton(u => new BlobServiceClient(builder.Configuration
+    .GetConnectionString("StorageAccount")));
 
 // Mapping Config
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// Authentication Config
+// Identity Config
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Password Config
@@ -69,7 +69,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-// Swagger Config for JWT
+// Swagger Config 
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
@@ -113,7 +113,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(o => o.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RedMango_API.Data;
@@ -18,11 +19,13 @@ namespace RedMango_API.Controllers
         private readonly ApplicationDbContext _db;
         private readonly IBlobService _blobService;
         protected ApiResponse _response;
+        private readonly IMapper _mapper;
 
-        public MenuItemController(ApplicationDbContext db, IBlobService blobService)
+        public MenuItemController(ApplicationDbContext db, IBlobService blobService, IMapper mapper)
         {
             _db = db;
             _blobService = blobService;
+            _mapper = mapper;
             _response = new ApiResponse();
         }
 
@@ -69,21 +72,17 @@ namespace RedMango_API.Controllers
                         _response.ErrorMessages.Add("File is required");
                         return BadRequest(_response);
                     }
+
+                    var newMenuItem = _mapper.Map<MenuItem>(menuItemCreateDTO);
+
                     string fileName = $"{Guid.NewGuid()}{Path.GetExtension(menuItemCreateDTO.File.FileName)}";
-                    MenuItem menuItemToCreate = new()
-                    {
-                        Name = menuItemCreateDTO.Name,
-                        Price = menuItemCreateDTO.Price,
-                        Category = menuItemCreateDTO.Category,
-                        SpecialTag = menuItemCreateDTO.SpecialTag,
-                        Description = menuItemCreateDTO.Description,
-                        Image = await _blobService.UploadBlob(fileName, SD.SD_Storage_Container, menuItemCreateDTO.File)
-                    };
-                    _db.MenuItems.Add(menuItemToCreate);
+                    newMenuItem.Image = await _blobService.UploadBlob(fileName, SD.SD_Storage_Container, menuItemCreateDTO.File);
+
+                    _db.MenuItems.Add(newMenuItem);
                     _db.SaveChanges();
-                    _response.Result = menuItemToCreate;
+                    _response.Result = newMenuItem;
                     _response.StatusCode = HttpStatusCode.Created;
-                    return CreatedAtRoute("GetMenuItem", new { id = menuItemToCreate.Id }, _response);
+                    return CreatedAtRoute("GetMenuItem", new { id = newMenuItem.Id }, _response);
                 }
                 else
                 {
@@ -121,6 +120,7 @@ namespace RedMango_API.Controllers
                         _response.ErrorMessages.Add("Not found this menu item");
                         return NotFound(_response);
                     }
+
                     menuItemFromDb.Name = menuItemUpdateDTO.Name;
                     menuItemFromDb.Price = menuItemUpdateDTO.Price;
                     menuItemFromDb.Category = menuItemUpdateDTO.Category;

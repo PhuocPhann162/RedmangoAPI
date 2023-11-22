@@ -134,7 +134,6 @@ namespace RedMango_API.Controllers
                     else
                     {
                         cartItemInCart.Quantity = newQuantity;
-                        _db.CartItems.Update(cartItemInCart);
                         _db.SaveChanges();
                     }
                 }
