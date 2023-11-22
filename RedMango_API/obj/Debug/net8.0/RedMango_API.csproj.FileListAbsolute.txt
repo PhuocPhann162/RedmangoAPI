@@ -159,3 +159,4 @@ C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\ob
 C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\obj\Debug\net8.0\RedMango_API.sourcelink.json
 C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\bin\Debug\net8.0\Stripe.net.dll
