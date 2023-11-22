@@ -24,15 +24,17 @@ namespace RedMango_API.Controllers
         {
             try
             {
-                if(string.IsNullOrEmpty(userId))
+                ShoppingCart shoppingCart;
+                if (string.IsNullOrEmpty(userId))
                 {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    _response.IsSuccess = false;
-                    return BadRequest(_response);
+                    shoppingCart = new();
                 }
-                ShoppingCart shoppingCart = _db.ShoppingCarts.
-                    Include(u => u.CartItems).ThenInclude(u => u.MenuItem).
-                    FirstOrDefault(u => u.UserId == userId);
+                else
+                {
+                    shoppingCart = _db.ShoppingCarts.
+                        Include(u => u.CartItems).ThenInclude(u => u.MenuItem).
+                        FirstOrDefault(u => u.UserId == userId);
+                }
 
                 if (shoppingCart == null)
                 {
@@ -41,7 +43,7 @@ namespace RedMango_API.Controllers
                     return NotFound(_response);
                 }
 
-                if(shoppingCart.CartItems != null && shoppingCart.CartItems.Count > 0)
+                if (shoppingCart.CartItems != null && shoppingCart.CartItems.Count > 0)
                 {
                     shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => u.Quantity * u.MenuItem.Price);
                 }
@@ -50,13 +52,13 @@ namespace RedMango_API.Controllers
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string> { ex.Message };
             }
-            
+
             return Ok(_response);
         }
 
