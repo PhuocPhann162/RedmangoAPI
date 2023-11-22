@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RedMango_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56e6f663c3adbcd4cc4b8e9c3d2e7fef5ada8685")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("RedMango_API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RedMango_API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

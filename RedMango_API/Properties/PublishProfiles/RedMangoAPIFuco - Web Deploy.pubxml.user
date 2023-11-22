@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAGPKW044TCkSLh/21VrKf8QAAAAACAAAAAAAQZgAAAAEAACAAAACzFsQIZqZyW0PRoqgNBYswYROY+amt+9sQcd1b7NpfeAAAAAAOgAAAAAIAACAAAAC4nna4kTJHJYv2YdmiMHLtAc2lGODm2wLtNdNq9SMkh4AAAACoej4I5DY8bdxjfxBZOSahkSlYvfje7abmytqSTUwmnNZPE68DbrmpejBVQHYpa2j0ADDaJx0OCKyaFa07iuQzJ9sKwxgtk6GijRsWKjadFPzYnBIpAVy00dlUmI3q/T9UCgzbt6s6ZUj+7wNqag3VeL4UjkEZJiFrS64pnG6bX0AAAAC5sJ08j1VV4NKtjSM0San4K4E8UWJ63YfkEsu1Hsc3Gk5No+VdAKRxq3l7vseeGk4CR88C7qm93Y+q1nnpWq8T</EncryptedPassword>
+    <History>False|2023-11-22T13:53:25.1101863Z;False|2023-11-22T20:50:17.5097768+07:00;True|2023-11-22T20:33:12.1048395+07:00;True|2023-11-22T20:22:04.9001529+07:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultDbConnection">
+      <Value>Server=tcp:fuco-react-redmango.database.windows.net,1433%3bInitial Catalog=redmango%3bPersist Security Info=False%3bUser ID=sqladmin%3bPassword=Admin123%2a%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

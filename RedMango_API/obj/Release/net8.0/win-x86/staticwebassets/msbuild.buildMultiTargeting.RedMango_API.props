@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\RedMango_API.props" />
+</Project>
