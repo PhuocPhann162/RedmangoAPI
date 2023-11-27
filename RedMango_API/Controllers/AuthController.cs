@@ -39,13 +39,6 @@ namespace RedMango_API.Controllers
         {
             ApplicationUser userFromDb = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
 
-            if (userFromDb == null)
-            {
-                _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.NotFound;
-                return NotFound(_response);
-            }
-
             bool isValid = await _userManager.CheckPasswordAsync(userFromDb, model.Password);
 
             if (isValid == false)
