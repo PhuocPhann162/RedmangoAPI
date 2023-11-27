@@ -42,13 +42,13 @@ namespace RedMango_API.Controllers
             if (userFromDb == null)
             {
                 _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.BadRequest;
-                return BadRequest(_response);
+                _response.StatusCode = HttpStatusCode.NotFound;
+                return NotFound(_response);
             }
 
             bool isValid = await _userManager.CheckPasswordAsync(userFromDb, model.Password);
 
-            if (!isValid)
+            if (isValid == false)
             {
                 _response.Result = new LoginRequestDTO();
                 _response.IsSuccess = false;
@@ -92,6 +92,7 @@ namespace RedMango_API.Controllers
             }
 
             _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
             _response.Result = loginResponse;
             return Ok(_response);
         }
