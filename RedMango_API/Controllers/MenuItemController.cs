@@ -105,7 +105,7 @@ namespace RedMango_API.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (menuItemUpdateDTO == null || id == 0)
+                    if (menuItemUpdateDTO == null || id != menuItemUpdateDTO.Id)
                     {
                         _response.IsSuccess = false;
                         _response.StatusCode = HttpStatusCode.BadRequest;
@@ -127,7 +127,7 @@ namespace RedMango_API.Controllers
                     menuItemFromDb.SpecialTag = menuItemUpdateDTO.SpecialTag;
                     menuItemFromDb.Description = menuItemUpdateDTO.Description;
 
-                    if (menuItemUpdateDTO.File == null && menuItemUpdateDTO.File.Length > 0)
+                    if (menuItemUpdateDTO.File != null && menuItemUpdateDTO.File.Length > 0)
                     {
                         string fileName = $"{Guid.NewGuid()}{Path.GetExtension(menuItemUpdateDTO.File.FileName)}";
                         await _blobService.DeleteBlob(menuItemFromDb.Image.Split('/').Last(), SD.SD_Storage_Container);

@@ -51,10 +51,10 @@ namespace RedMango_API.Controllers
             }
 
             // we have to generate JWT 
+            var roles = await _userManager.GetRolesAsync(userFromDb);
             JwtSecurityTokenHandler tokenHandler = new();
             byte[] key = Encoding.ASCII.GetBytes(secretKey);
 
-            var roles = await _userManager.GetRolesAsync(userFromDb);
             SecurityTokenDescriptor tokenDescriptor = new()
             {
                 Subject = new ClaimsIdentity(new Claim[]
