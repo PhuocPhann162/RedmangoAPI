@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace RedMango_API.Controllers
             _response = new();
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<ApiResponse>> GetOrders(string? userId)
         {
