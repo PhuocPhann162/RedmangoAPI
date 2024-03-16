@@ -37,57 +37,67 @@ namespace RedMango_API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO model)
         {
-            ApplicationUser userFromDb = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-
-            bool isValid = await _userManager.CheckPasswordAsync(userFromDb, model.Password);
-
-            if (isValid == false)
+            try
             {
-                _response.Result = new LoginRequestDTO();
-                _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.ErrorMessages.Add("Username or password is incorrect");
-                return BadRequest(_response);
-            }
+                ApplicationUser userFromDb = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
 
-            // we have to generate JWT 
-            var roles = await _userManager.GetRolesAsync(userFromDb);
-            JwtSecurityTokenHandler tokenHandler = new();
-            byte[] key = Encoding.ASCII.GetBytes(secretKey);
+                bool isValid = await _userManager.CheckPasswordAsync(userFromDb, model.Password);
 
-            SecurityTokenDescriptor tokenDescriptor = new()
-            {
-                Subject = new ClaimsIdentity(new Claim[]
+                if (isValid == false)
                 {
+                    _response.Result = new LoginRequestDTO();
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.ErrorMessages.Add("Username or password is incorrect");
+                    return BadRequest(_response);
+                }
+
+                // we have to generate JWT 
+                var roles = await _userManager.GetRolesAsync(userFromDb);
+                JwtSecurityTokenHandler tokenHandler = new();
+                byte[] key = Encoding.ASCII.GetBytes(secretKey);
+
+                SecurityTokenDescriptor tokenDescriptor = new()
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
                     new Claim("fullName", userFromDb.Name),
                     new Claim("id", userFromDb.Id.ToString()),
                     new Claim(ClaimTypes.Email, userFromDb.Email.ToString()),
                     new Claim(ClaimTypes.Role, roles.FirstOrDefault()),
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-            };
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                };
 
-            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+                SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
-            LoginResponseDTO loginResponse = new()
-            {
-                Email = userFromDb.Email,
-                Token = tokenHandler.WriteToken(token),
-            };
+                LoginResponseDTO loginResponse = new()
+                {
+                    Email = userFromDb.Email,
+                    Token = tokenHandler.WriteToken(token),
+                };
 
-            if (loginResponse.Email == null || string.IsNullOrEmpty(loginResponse.Token))
+                if (loginResponse.Email == null || string.IsNullOrEmpty(loginResponse.Token))
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
+                    _response.ErrorMessages.Add("Username or password is incorrect");
+                    return BadRequest(_response);
+                }
+
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.Result = loginResponse;
+                return Ok(_response);
+            }
+            catch (Exception ex)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = new List<string>() { ex.Message };
                 _response.IsSuccess = false;
-                _response.ErrorMessages.Add("Username or password is incorrect");
-                return BadRequest(_response);
             }
-
-            _response.StatusCode = HttpStatusCode.OK;
-            _response.IsSuccess = true;
-            _response.Result = loginResponse;
-            return Ok(_response);
+            return BadRequest(_response);
         }
 
         [HttpPost("register")]
@@ -136,11 +146,10 @@ namespace RedMango_API.Controllers
             }
             catch (Exception ex)
             {
-
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add("Error while registering");
             }
-            _response.StatusCode = HttpStatusCode.BadRequest;
-            _response.IsSuccess = false;
-            _response.ErrorMessages.Add("Error while registering");
             return BadRequest(_response);
         }
     }

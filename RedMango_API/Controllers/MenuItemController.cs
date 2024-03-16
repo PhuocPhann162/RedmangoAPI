@@ -33,30 +33,51 @@ namespace RedMango_API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMenuItems()
         {
-            _response.Result = _db.MenuItems;
-            _response.StatusCode = HttpStatusCode.OK;
-            return Ok(_response);
+            try
+            {
+                _response.Result = await _db.MenuItems.ToListAsync();
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = new List<string>() { ex.Message };
+                _response.IsSuccess = false;
+            }
+            return BadRequest(_response);
         }
 
         [HttpGet("{id:int}", Name = "GetMenuItem")]
         public async Task<IActionResult> GetMenuItem(int id)
         {
-            if (id == 0)
+            try
             {
-                _response.IsSuccess = false;
+                if (id == 0)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+                MenuItem menuItem = await _db.MenuItems.FirstOrDefaultAsync(u => u.Id == id);
+                if (menuItem == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    return NotFound(_response);
+                }
+                _response.Result = await _db.MenuItems.FirstOrDefaultAsync(u => u.Id == id);
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                return BadRequest(_response);
-            }
-            MenuItem menuItem = await _db.MenuItems.FirstOrDefaultAsync(u => u.Id == id);
-            if (menuItem == null)
-            {
+                _response.ErrorMessages = new List<string>() { ex.Message };
                 _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.NotFound;
-                return NotFound(_response);
             }
-            _response.Result = _db.MenuItems.FirstOrDefault(u => u.Id == id);
-            _response.StatusCode = HttpStatusCode.OK;
-            return Ok(_response);
+            return BadRequest(_response);
+
         }
 
         [HttpPost]
@@ -81,7 +102,7 @@ namespace RedMango_API.Controllers
                     newMenuItem.Image = await _blobService.UploadBlob(fileName, SD.SD_Storage_Container, menuItemCreateDTO.File);
 
                     _db.MenuItems.Add(newMenuItem);
-                    _db.SaveChanges();
+                    await _db.SaveChangesAsync();
                     _response.Result = newMenuItem;
                     _response.StatusCode = HttpStatusCode.Created;
                     return CreatedAtRoute("GetMenuItem", new { id = newMenuItem.Id }, _response);
@@ -97,7 +118,7 @@ namespace RedMango_API.Controllers
                 _response.ErrorMessages = new List<string>() { ex.Message };
 
             }
-            return _response;
+            return BadRequest(_response);
         }
 
         [HttpPut("{id:int}")]
@@ -115,7 +136,7 @@ namespace RedMango_API.Controllers
                         return BadRequest();
                     }
 
-                    MenuItem menuItemFromDb = await _db.MenuItems.FindAsync(id);
+                    MenuItem menuItemFromDb = await _db.MenuItems.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
                     if (menuItemFromDb == null)
                     {
                         _response.IsSuccess = false;
@@ -137,7 +158,7 @@ namespace RedMango_API.Controllers
                         menuItemFromDb.Image = await _blobService.UploadBlob(fileName, SD.SD_Storage_Container, menuItemUpdateDTO.File);
                     }
                     _db.MenuItems.Update(menuItemFromDb);
-                    _db.SaveChanges();
+                    await _db.SaveChangesAsync();
                     _response.StatusCode = HttpStatusCode.NoContent;
                     return Ok(_response);
                 }
@@ -150,9 +171,8 @@ namespace RedMango_API.Controllers
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string>() { ex.Message };
-
             }
-            return _response;
+            return BadRequest(_response);
         }
 
         [HttpDelete("{id:int}")]
@@ -182,7 +202,7 @@ namespace RedMango_API.Controllers
                 Thread.Sleep(milliseconds);
 
                 _db.MenuItems.Remove(menuItemFromDb);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 _response.StatusCode = HttpStatusCode.NoContent;
                 return Ok(_response);
 
@@ -193,7 +213,7 @@ namespace RedMango_API.Controllers
                 _response.ErrorMessages = new List<string>() { ex.Message };
                 _response.StatusCode = HttpStatusCode.BadRequest;
             }
-            return _response;
+            return BadRequest(_response);
         }
     }
 }

@@ -13,11 +13,17 @@ namespace RedMango_API.Utility
             {
                 // MenuItem Map
                 config.CreateMap<MenuItem, MenuItemCreateDTO>().ReverseMap();
+                config.CreateMap<MenuItem, MenuItemUpdateDTO>().ReverseMap();
 
                 // Order Map
                 config.CreateMap<OrderHeader, OrderHeaderCreateDTO>().ReverseMap();
                 config.CreateMap<OrderDetails, OrderDetailsCreateDTO>().ReverseMap();
+
+                // Coupon Map 
+                config.CreateMap<Coupon, CouponCreateDTO>().ReverseMap();
+                config.CreateMap<Coupon, CouponUpdateDTO>().ReverseMap();
             });
+         
             return mappingConfig;
         }
     }

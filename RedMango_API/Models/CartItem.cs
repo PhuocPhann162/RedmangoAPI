@@ -9,7 +9,6 @@ namespace RedMango_API.Models
         public int MenuItemId { get; set; }
         [ForeignKey("MenuItemId")]
         public MenuItem MenuItem { get; set; } = new();
-
         public int Quantity { get; set; }
         public int ShoppingCartId { get; set; }
     }

@@ -249,6 +249,52 @@ namespace RedMango_API.Migrations
                     b.ToTable("CartItems");
                 });
 
+            modelBuilder.Entity("RedMango_API.Models.Coupon", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("DiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<int>("MinAmount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Coupons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "10OFF",
+                            DiscountAmount = 10.0,
+                            MinAmount = 20
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "20OFF",
+                            DiscountAmount = 20.0,
+                            MinAmount = 40
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "50OFF",
+                            DiscountAmount = 50.0,
+                            MinAmount = 300
+                        });
+                });
+
             modelBuilder.Entity("RedMango_API.Models.MenuItem", b =>
                 {
                     b.Property<int>("Id")
@@ -469,6 +515,9 @@ namespace RedMango_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CouponCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");

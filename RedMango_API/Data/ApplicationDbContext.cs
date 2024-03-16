@@ -16,6 +16,7 @@ namespace RedMango_API.Data
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<OrderHeader> OrderHeader { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -113,6 +114,29 @@ namespace RedMango_API.Data
                     Category = "Dessert",
                     SpecialTag = "Top Rated"
                 });
+            modelBuilder.Entity<Coupon>().HasData(new Coupon
+            {
+                Id = 1,
+                Code = "10OFF",
+                DiscountAmount = 10,
+                MinAmount = 20,
+            });
+
+            modelBuilder.Entity<Coupon>().HasData(new Coupon
+            {
+                Id = 2,
+                Code = "20OFF",
+                DiscountAmount = 20,
+                MinAmount = 40,
+            });
+
+            modelBuilder.Entity<Coupon>().HasData(new Coupon
+            {
+                Id = 3,
+                Code = "50OFF",
+                DiscountAmount = 50,
+                MinAmount = 300,
+            });
         }
     }
 }
