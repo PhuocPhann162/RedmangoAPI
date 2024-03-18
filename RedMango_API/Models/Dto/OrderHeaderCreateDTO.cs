@@ -13,6 +13,8 @@ namespace RedMango_API.Models.Dto
 
         public string ApplicationUserId { get; set; }
         public double OrderTotal { get; set; }
+        public string CouponCode { get; set; }
+        public double DiscountAmount { get; set; }
 
         public string StripePaymentIntentID { get; set; }
         public string Status { get; set; }

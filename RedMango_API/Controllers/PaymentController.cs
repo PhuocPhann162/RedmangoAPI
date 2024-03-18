@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RedMango_API.Data;
 using RedMango_API.Models;
 using Stripe;
 using System.Net;
+using static Azure.Core.HttpHeader;
+using Coupon = RedMango_API.Models.Coupon;
 
 namespace RedMango_API.Controllers
 {
@@ -37,9 +38,30 @@ namespace RedMango_API.Controllers
                     return BadRequest(_response);
                 }
 
+
+
+
                 #region Create Payment Intent
                 StripeConfiguration.ApiKey = _configuration["StripeSettings:SecretKey"];
                 shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => u.Quantity * u.MenuItem.Price);
+
+                if (!string.IsNullOrEmpty(shoppingCart.CouponCode))
+                {
+                    var coupon = await _db.Coupons.FirstOrDefaultAsync(u => u.Code == shoppingCart.CouponCode);
+
+                    if (shoppingCart.CartTotal > coupon.MinAmount)
+                    {
+                        shoppingCart.Discount = coupon.DiscountAmount;
+                    }
+                    else
+                    {
+                        shoppingCart.Discount = 0;
+                    }
+                }
+                else
+                {
+                    shoppingCart.Discount = 0;
+                }
 
                 PaymentIntentCreateOptions options = new()
                 {

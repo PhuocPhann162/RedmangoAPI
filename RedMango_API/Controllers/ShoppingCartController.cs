@@ -170,10 +170,17 @@ namespace RedMango_API.Controllers
             try
             {
                 var cartFromDb = await _db.ShoppingCarts.FirstAsync(u => u.UserId == cartDto.UserId);
-                cartFromDb.CouponCode = cartDto.CouponCode;
+                if(!string.IsNullOrEmpty(cartFromDb.CouponCode))
+                {
+                    cartFromDb.CouponCode = "";
+                }
+                else
+                {
+                    cartFromDb.CouponCode = cartDto.CouponCode;
+                }
                 _db.ShoppingCarts.Update(cartFromDb);
                 await _db.SaveChangesAsync();
-                _response.Result = true;
+                _response.Result = cartFromDb;
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
