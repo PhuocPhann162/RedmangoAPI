@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using RedMango_API.Data;
 using RedMango_API.Models;
 using RedMango_API.Models.Dto;
+using RedMango_API.Models.DTO;
 using RedMango_API.Utility;
 using System.Net;
 
@@ -123,15 +124,22 @@ namespace RedMango_API.Controllers
             return _response;
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         [Authorize(Roles = SD.Role_Admin)]
-        public async Task<ActionResult<ApiResponse>> UpdateCoupon([FromForm] CouponUpdateDTO couponDto)
+        public async Task<ActionResult<ApiResponse>> UpdateCoupon(int id, [FromForm] CouponUpdateDTO couponDto)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Coupon couponFromDb = await _db.Coupons.AsNoTracking().FirstAsync(u => u.Id == couponDto.Id);
+                    if (couponDto == null || id != couponDto.Id)
+                    {
+                        _response.IsSuccess = false;
+                        _response.StatusCode = HttpStatusCode.BadRequest;
+                        _response.ErrorMessages = new List<string>() { "Something wrong when update coupon" };
+                        return BadRequest();
+                    }
+                    Coupon couponFromDb = await _db.Coupons.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
                     if (couponFromDb == null)
                     {
                         _response.StatusCode = HttpStatusCode.BadRequest;

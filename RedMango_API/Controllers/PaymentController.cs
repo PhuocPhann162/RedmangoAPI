@@ -38,9 +38,6 @@ namespace RedMango_API.Controllers
                     return BadRequest(_response);
                 }
 
-
-
-
                 #region Create Payment Intent
                 StripeConfiguration.ApiKey = _configuration["StripeSettings:SecretKey"];
                 shoppingCart.CartTotal = shoppingCart.CartItems.Sum(u => u.Quantity * u.MenuItem.Price);
