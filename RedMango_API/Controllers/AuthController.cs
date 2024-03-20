@@ -41,6 +41,7 @@ namespace RedMango_API.Controllers
             {
                 ApplicationUser userFromDb = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
 
+                
                 bool isValid = await _userManager.CheckPasswordAsync(userFromDb, model.Password);
 
                 if (isValid == false)
@@ -49,6 +50,15 @@ namespace RedMango_API.Controllers
                     _response.IsSuccess = false;
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     _response.ErrorMessages.Add("Username or password is incorrect");
+                    return BadRequest(_response);
+                }
+
+                if (userFromDb.LockoutEnd != null && userFromDb.LockoutEnd > DateTime.Now)
+                {
+                    _response.Result = new LoginRequestDTO();
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.ErrorMessages.Add("This account has been locked.");
                     return BadRequest(_response);
                 }
 
@@ -63,6 +73,11 @@ namespace RedMango_API.Controllers
                     {
                     new Claim("fullName", userFromDb.Name),
                     new Claim("id", userFromDb.Id.ToString()),
+                    new Claim("phoneNumber", userFromDb.PhoneNumber.ToString()),
+                    new Claim("streetAddress", userFromDb.StreetAddress.ToString()),
+                    new Claim("city", userFromDb.City.ToString()),
+                    new Claim("state", userFromDb.State.ToString()),
+                    new Claim("postalCode", userFromDb.PostalCode.ToString()),
                     new Claim(ClaimTypes.Email, userFromDb.Email.ToString()),
                     new Claim(ClaimTypes.Role, roles.FirstOrDefault()),
                     }),
@@ -116,9 +131,14 @@ namespace RedMango_API.Controllers
             ApplicationUser newUser = new()
             {
                 UserName = model.UserName,
+                Name = model.Name,
+                PhoneNumber = model.PhoneNumber,
+                StreetAddress = model.StreetAddress, 
+                City = model.City, 
+                PostalCode = model.PostalCode,
+                State = model.State,
                 Email = model.UserName,
                 NormalizedEmail = model.UserName.ToUpper(),
-                Name = model.Name
             };
 
             try
@@ -131,15 +151,29 @@ namespace RedMango_API.Controllers
                         // create roles in db
                         await _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin));
                         await _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer));
+                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee));
                     }
-                    if (model.Role.ToLower() == SD.Role_Admin)
+                    if(!String.IsNullOrEmpty(model.Role))
                     {
-                        await _userManager.AddToRoleAsync(newUser, SD.Role_Admin);
+                        if (model.Role.ToLower() == SD.Role_Admin)
+                        {
+                            await _userManager.AddToRoleAsync(newUser, SD.Role_Admin);
+                        }
+                        else if (model.Role.ToLower() == SD.Role_Employee)
+                        {
+                            await _userManager.AddToRoleAsync(newUser, SD.Role_Employee);
+                        }
                     }
                     else
                     {
                         await _userManager.AddToRoleAsync(newUser, SD.Role_Customer);
                     }
+
+                    if(model.UserName == null)
+                    {
+                        _response.StatusCode = HttpStatusCode.NotFound;
+                    }
+
                     _response.StatusCode = HttpStatusCode.OK;
                     return Ok(_response);
                 }
@@ -148,7 +182,7 @@ namespace RedMango_API.Controllers
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
-                _response.ErrorMessages.Add("Error while registering");
+                _response.ErrorMessages.Add("Error while registration");
             }
             return BadRequest(_response);
         }

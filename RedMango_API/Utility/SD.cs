@@ -5,6 +5,7 @@
         public const string SD_Storage_Container = "redmango";
         public const string Role_Admin = "admin";
         public const string Role_Customer = "customer";
+        public const string Role_Employee = "employee";
 
         public const string Status_Pending = "Pending";
         public const string Status_Confirmed = "Confirmed";
