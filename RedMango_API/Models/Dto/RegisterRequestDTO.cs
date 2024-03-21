@@ -1,4 +1,6 @@
-﻿namespace RedMango_API.Models.Dto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RedMango_API.Models.Dto
 {
     public class RegisterRequestDTO
     {

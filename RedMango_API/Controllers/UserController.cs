@@ -29,7 +29,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<ActionResult<ApiResponse>> GetAllUsers()
         {
             try
             {
@@ -65,7 +65,7 @@ namespace RedMango_API.Controllers
 
 
         [HttpPost("lockUnlock/{id}")]
-        public async Task<IActionResult> LockUnlock([FromBody]string? id)
+        public async Task<ActionResult<ApiResponse>> LockUnlock(string? id)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<IActionResult> GetUserInfoAndRoles(string userId)
+        public async Task<ActionResult<ApiResponse>> GetUserInfoAndRoles(string userId)
         {
             try
             {
@@ -124,7 +124,7 @@ namespace RedMango_API.Controllers
                 _response.Result = rm;
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
-            } 
+            }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
@@ -134,9 +134,8 @@ namespace RedMango_API.Controllers
             return BadRequest(_response);
         }
 
-        [HttpPost]
-        [Route("updateRole/{userId}")]
-        public async Task<IActionResult> RoleManagement(string userId, [FromForm] string role)
+        [HttpPost("updateRole/{userId}")]
+        public async Task<ActionResult<ApiResponse>> RoleManagement(string userId, [FromForm] string role)
         {
             try
             {
@@ -146,7 +145,10 @@ namespace RedMango_API.Controllers
                 ApplicationUser applicationUser = await _db.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == userId);
                 if (!(role == oldRole))
                 {
-                    _userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
+                    if (oldRole != null)
+                    {
+                        _userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
+                    }
                     _userManager.AddToRoleAsync(applicationUser, role).GetAwaiter().GetResult();
                 }
 
@@ -154,7 +156,7 @@ namespace RedMango_API.Controllers
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
