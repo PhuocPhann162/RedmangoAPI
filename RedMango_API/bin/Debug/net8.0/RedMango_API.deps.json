@@ -12,6 +12,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "Azure.Storage.Blobs": "12.19.1",
           "EfCore.SchemaCompare": "8.0.0",
+          "ErikEJ.EntityFrameworkCore.DgmlBuilder": "6.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "8.0.0",
@@ -120,6 +121,17 @@
           "lib/net8.0/EfSchemaCompare.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.0.0"
+          }
+        }
+      },
+      "ErikEJ.EntityFrameworkCore.DgmlBuilder/6.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "8.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/ErikEJ.EntityFrameworkCore.6.DgmlBuilder.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -1468,6 +1480,13 @@
       "sha512": "sha512-66+qFIuIJj7wVBglI9FGGnS1UOU77WnchyvTnVKrhQcZCciIF/F08PO/0R/Yu5MDLChiP17qFk/2RqJ0Mne2hA==",
       "path": "efcore.schemacompare/8.0.0",
       "hashPath": "efcore.schemacompare.8.0.0.nupkg.sha512"
+    },
+    "ErikEJ.EntityFrameworkCore.DgmlBuilder/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hY2zpLvfMrpGuakjPAE8Zp6JcMdGg3+CqN1Vvp++iy4c15SI9CY/zIjTHfyGefa0IfSgk5TGRhVvBnhopddWIg==",
+      "path": "erikej.entityframeworkcore.dgmlbuilder/6.0.0",
+      "hashPath": "erikej.entityframeworkcore.dgmlbuilder.6.0.0.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",

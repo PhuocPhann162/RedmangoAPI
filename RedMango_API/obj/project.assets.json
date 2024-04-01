@@ -130,6 +130,18 @@
           }
         }
       },
+      "ErikEJ.EntityFrameworkCore.DgmlBuilder/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/ErikEJ.EntityFrameworkCore.6.DgmlBuilder.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/ErikEJ.EntityFrameworkCore.6.DgmlBuilder.dll": {}
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
@@ -2282,6 +2294,18 @@
         "lib/net8.0/EfSchemaCompare.dll",
         "lib/net8.0/EfSchemaCompare.runtimeconfig.json",
         "lib/net8.0/EfSchemaCompare.xml"
+      ]
+    },
+    "ErikEJ.EntityFrameworkCore.DgmlBuilder/6.0.0": {
+      "sha512": "hY2zpLvfMrpGuakjPAE8Zp6JcMdGg3+CqN1Vvp++iy4c15SI9CY/zIjTHfyGefa0IfSgk5TGRhVvBnhopddWIg==",
+      "type": "package",
+      "path": "erikej.entityframeworkcore.dgmlbuilder/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "erikej.entityframeworkcore.dgmlbuilder.6.0.0.nupkg.sha512",
+        "erikej.entityframeworkcore.dgmlbuilder.nuspec",
+        "lib/net6.0/ErikEJ.EntityFrameworkCore.6.DgmlBuilder.dll"
       ]
     },
     "Humanizer.Core/2.14.1": {
@@ -5534,6 +5558,7 @@
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
       "Azure.Storage.Blobs >= 12.19.1",
       "EfCore.SchemaCompare >= 8.0.0",
+      "ErikEJ.EntityFrameworkCore.DgmlBuilder >= 6.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.0",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 8.0.0",
@@ -5599,6 +5624,10 @@
           "EfCore.SchemaCompare": {
             "target": "Package",
             "version": "[8.0.0, )"
+          },
+          "ErikEJ.EntityFrameworkCore.DgmlBuilder": {
+            "target": "Package",
+            "version": "[6.0.0, )"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",

@@ -194,3 +194,4 @@ C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\bi
 C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\bin\Debug\net8.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\bin\Debug\net8.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\bin\Debug\net8.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\Asus\source\repos\ASPNET\Fuco_RedMango_API\RedMango_API\RedMango_API\bin\Debug\net8.0\ErikEJ.EntityFrameworkCore.6.DgmlBuilder.dll

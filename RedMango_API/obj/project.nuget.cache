@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wf527aLEZtOlXxkSGbYud+xyQivKsW7AKg2wWGlis6Ni+VgtmYICKx3BqsyO8IyeQp06rZHcq6BR3fsZ0ITVPw==",
+  "dgSpecHash": "xQO4v8q22btXYKB9cvBFLYbA8oDw7hbAIiCt8NmLyZWK+d0nbNaffAw0OOpa0pMDE3Cr+DMvDUav/J6D59HxLA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Asus\\source\\repos\\ASPNET\\Fuco_RedMango_API\\RedMango_API\\RedMango_API\\RedMango_API.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "C:\\Users\\Asus\\.nuget\\packages\\azure.storage.blobs\\12.19.1\\azure.storage.blobs.12.19.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\azure.storage.common\\12.18.1\\azure.storage.common.12.18.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\efcore.schemacompare\\8.0.0\\efcore.schemacompare.8.0.0.nupkg.sha512",
+    "C:\\Users\\Asus\\.nuget\\packages\\erikej.entityframeworkcore.dgmlbuilder\\6.0.0\\erikej.entityframeworkcore.dgmlbuilder.6.0.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.0\\microsoft.aspnetcore.authentication.jwtbearer.8.0.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.0\\microsoft.aspnetcore.cryptography.internal.8.0.0.nupkg.sha512",

@@ -17,6 +17,7 @@ namespace RedMango_API.Data
         public DbSet<OrderHeader> OrderHeader { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -136,6 +137,14 @@ namespace RedMango_API.Data
                 Code = "50OFF",
                 DiscountAmount = 50,
                 MinAmount = 300,
+            });
+
+            modelBuilder.Entity<Review>().HasData(new Review {
+                Id = 1,
+                Title = "Really Delicious!!", 
+                Description = "I have never tried it before",
+                Stars = 5, 
+                MenuItemId = 2
             });
         }
     }
