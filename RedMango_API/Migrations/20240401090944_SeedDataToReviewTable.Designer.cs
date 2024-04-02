@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedMango_API.Data;
 
@@ -11,9 +12,11 @@ using RedMango_API.Data;
 namespace RedMango_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240401090944_SeedDataToReviewTable")]
+    partial class SeedDataToReviewTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -535,12 +538,8 @@ namespace RedMango_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Comment")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("MenuItemId")
                         .HasColumnType("int");
@@ -548,11 +547,12 @@ namespace RedMango_API.Migrations
                     b.Property<int>("Stars")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MenuItemId");
 
                     b.ToTable("Reviews");
 
@@ -560,47 +560,42 @@ namespace RedMango_API.Migrations
                         new
                         {
                             Id = 1,
-                            Comment = "Really Delicious!! I have never tried it before",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(329),
+                            Description = "I have never tried it before",
                             MenuItemId = 2,
                             Stars = 5,
-                            UserId = "0d65520d-107f-440e-aa41-ed1f492c86ff"
+                            Title = "Really Delicious!!"
                         },
                         new
                         {
                             Id = 2,
-                            Comment = "Yummy!! I love this food. It exceeded my expectations",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(351),
+                            Description = "I love this product! It exceeded my expectations.",
                             MenuItemId = 2,
                             Stars = 4,
-                            UserId = "12b39b7b-ae91-437a-b939-56fdb95685f4"
+                            Title = ""
                         },
                         new
                         {
                             Id = 3,
-                            Comment = "Great Food!!I love this food. It exceeded my expectations",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(353),
+                            Description = "I love this product! It exceeded my expectations.",
                             MenuItemId = 2,
                             Stars = 4,
-                            UserId = "8d9dc5f6-ad81-4558-b5a8-84b3cf4bdca7"
+                            Title = "Great Food!!"
                         },
                         new
                         {
                             Id = 4,
-                            Comment = "So Tasteful!! I will try again soon",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(354),
+                            Description = "I will try again soon",
                             MenuItemId = 1,
                             Stars = 5,
-                            UserId = "12b39b7b-ae91-437a-b939-56fdb95685f4"
+                            Title = "So Tasteful!!"
                         },
                         new
                         {
                             Id = 5,
-                            Comment = "Worst than Vietnamese Food. Just a simple food",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(355),
+                            Description = "Just a simple food",
                             MenuItemId = 3,
                             Stars = 3,
-                            UserId = "20b88091-8f9e-4778-a794-4efc3e16b112"
+                            Title = "Worst than Vietnamese Food"
                         });
                 });
 
@@ -715,6 +710,17 @@ namespace RedMango_API.Migrations
                         .HasForeignKey("ApplicationUserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RedMango_API.Models.Review", b =>
+                {
+                    b.HasOne("RedMango_API.Models.MenuItem", "MenuItem")
+                        .WithMany()
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MenuItem");
                 });
 
             modelBuilder.Entity("RedMango_API.Models.OrderHeader", b =>

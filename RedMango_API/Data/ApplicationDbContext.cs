@@ -6,7 +6,7 @@ namespace RedMango_API.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options) 
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -22,7 +22,7 @@ namespace RedMango_API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             modelBuilder.Entity<MenuItem>().HasData(
                 new MenuItem
                 {
@@ -121,17 +121,13 @@ namespace RedMango_API.Data
                 Code = "10OFF",
                 DiscountAmount = 10,
                 MinAmount = 20,
-            });
-
-            modelBuilder.Entity<Coupon>().HasData(new Coupon
+            }, new Coupon
             {
                 Id = 2,
                 Code = "20OFF",
                 DiscountAmount = 20,
                 MinAmount = 40,
-            });
-
-            modelBuilder.Entity<Coupon>().HasData(new Coupon
+            }, new Coupon
             {
                 Id = 3,
                 Code = "50OFF",
@@ -139,12 +135,47 @@ namespace RedMango_API.Data
                 MinAmount = 300,
             });
 
-            modelBuilder.Entity<Review>().HasData(new Review {
+
+            modelBuilder.Entity<Review>().HasData(new Review
+            {
                 Id = 1,
-                Title = "Really Delicious!!", 
-                Description = "I have never tried it before",
-                Stars = 5, 
-                MenuItemId = 2
+                Comment = "Really Delicious!! I have never tried it before",
+                Stars = 5,
+                MenuItemId = 2,
+                UserId = "0d65520d-107f-440e-aa41-ed1f492c86ff",
+                CreatedAt = DateTime.Now,
+            }, new Review
+            {
+                Id = 2,
+                Comment = "Yummy!! I love this food. It exceeded my expectations",
+                Stars = 4,
+                MenuItemId = 2,
+                UserId = "12b39b7b-ae91-437a-b939-56fdb95685f4",
+                CreatedAt = DateTime.Now,
+            }, new Review
+            {
+                Id = 3,
+                Comment = "Great Food!!I love this food. It exceeded my expectations",
+                Stars = 4,
+                MenuItemId = 2,
+                UserId = "8d9dc5f6-ad81-4558-b5a8-84b3cf4bdca7",
+                CreatedAt = DateTime.Now,
+            }, new Review
+            {
+                Id = 4,
+                Comment = "So Tasteful!! I will try again soon",
+                Stars = 5,
+                MenuItemId = 1,
+                UserId = "12b39b7b-ae91-437a-b939-56fdb95685f4",
+                CreatedAt = DateTime.Now,
+            }, new Review
+            {
+                Id = 5,
+                Comment = "Worst than Vietnamese Food. Just a simple food",
+                Stars = 3,
+                MenuItemId = 3,
+                UserId = "20b88091-8f9e-4778-a794-4efc3e16b112",
+                CreatedAt = DateTime.Now,
             });
         }
     }

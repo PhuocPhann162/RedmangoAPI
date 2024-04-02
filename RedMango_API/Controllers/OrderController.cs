@@ -28,6 +28,7 @@ namespace RedMango_API.Controllers
 
         [Authorize]
         [HttpGet]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public async Task<ActionResult<ApiResponse>> GetOrders(string? userId, string searchString, string status, int pageNumber = 1, int pageSize = 5)
         {
             try

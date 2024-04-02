@@ -13,7 +13,6 @@ namespace RedMango_API.Controllers
 {
     [Route("api/User")]
     [ApiController]
-    [Authorize(Roles = SD.Role_Admin)]
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
@@ -29,6 +28,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<ActionResult<ApiResponse>> GetAllUsers()
         {
             try
@@ -65,6 +65,7 @@ namespace RedMango_API.Controllers
 
 
         [HttpPost("lockUnlock/{id}")]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<ActionResult<ApiResponse>> LockUnlock(string? id)
         {
             try
@@ -135,6 +136,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpPost("updateRole/{userId}")]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<ActionResult<ApiResponse>> RoleManagement(string userId, [FromForm] string role)
         {
             try

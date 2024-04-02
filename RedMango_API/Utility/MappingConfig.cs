@@ -22,6 +22,9 @@ namespace RedMango_API.Utility
                 // Coupon Map 
                 config.CreateMap<Coupon, CouponCreateDTO>().ReverseMap();
                 config.CreateMap<Coupon, CouponUpdateDTO>().ReverseMap();
+
+                // Review Map
+                config.CreateMap<Review, CreateReviewDTO>().ReverseMap();   
             });
          
             return mappingConfig;
