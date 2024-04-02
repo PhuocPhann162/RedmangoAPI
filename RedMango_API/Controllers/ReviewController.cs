@@ -72,7 +72,7 @@ namespace RedMango_API.Controllers
                     noFiveStars = lstReviews.Where(u => u.Stars == 5).Count(),
                 };
                 avgRating.totalRating = avgRating.noOneStar + avgRating.noTwoStars + avgRating.noThreeStars +  avgRating.noFourStars + avgRating.noFiveStars;
-                avgRating.averageRating = (avgRating.noOneStar * 1 + avgRating.noTwoStars * 2 + avgRating.noThreeStars * 3 + avgRating.noFourStars * 4 + avgRating.noFiveStars * 5) / avgRating.totalRating;
+                avgRating.averageRating = (float) (avgRating.noOneStar * 1 + avgRating.noTwoStars * 2 + avgRating.noThreeStars * 3 + avgRating.noFourStars * 4 + avgRating.noFiveStars * 5) / avgRating.totalRating;
                 _response.Result = avgRating;
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -87,6 +87,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> CreateReview([FromForm] CreateReviewDTO createReviewDTO)
         {
             try
@@ -114,6 +115,7 @@ namespace RedMango_API.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> DeleteReview(int id)
         {
             try

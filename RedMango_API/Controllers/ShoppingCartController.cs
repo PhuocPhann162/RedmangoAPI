@@ -77,9 +77,9 @@ namespace RedMango_API.Controllers
         {
             // Shopping cart will have one entry per user id, even if a user has many items in cart.
             // Cart items will have all the items in shopping cart for a user. 
-            // updatequantityby will have count by with an items quantity needs to be updated.
+            // updateQuantityBy will have count by with an items quantity needs to be updated.
             // if it is -1 that means we have lower a count if it is 5 it means we have to add 5 count to existing count.
-            // if updatequantityby by is 0, item will be removed.
+            // if updateQuantityBy by is 0, item will be removed.
 
             // when a user adds a new item to a new shopping cart for the first time 
             // when a user adds a new item to an existing shopping cart (basically user has other items in cart) 
@@ -142,6 +142,7 @@ namespace RedMango_API.Controllers
                             _db.CartItems.Remove(cartItemInCart);
                             if (shoppingCart.CartItems.Count() == 1)
                             {
+                                shoppingCart.CartTotal = 0;
                                 _db.ShoppingCarts.Remove(shoppingCart);
                             }
                             _db.SaveChanges();

@@ -29,6 +29,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public async Task<IActionResult> GetCoupons()
         {
             try
@@ -48,6 +49,7 @@ namespace RedMango_API.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public async Task<IActionResult> GetCouponById(int id)
         {
             try
@@ -74,6 +76,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpGet("getByCode/{code}")]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public async Task<IActionResult> GetCouponByCode(string code)
         {
             try
