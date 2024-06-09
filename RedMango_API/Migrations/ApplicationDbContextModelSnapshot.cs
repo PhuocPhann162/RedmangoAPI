@@ -277,6 +277,9 @@ namespace RedMango_API.Migrations
                     b.Property<double>("DiscountAmount")
                         .HasColumnType("float");
 
+                    b.Property<DateTime?>("Expiration")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("MinAmount")
                         .HasColumnType("int");
 
@@ -290,6 +293,7 @@ namespace RedMango_API.Migrations
                             Id = 1,
                             Code = "10OFF",
                             DiscountAmount = 10.0,
+                            Expiration = new DateTime(2024, 6, 12, 11, 10, 21, 105, DateTimeKind.Local).AddTicks(2162),
                             MinAmount = 20
                         },
                         new
@@ -297,6 +301,7 @@ namespace RedMango_API.Migrations
                             Id = 2,
                             Code = "20OFF",
                             DiscountAmount = 20.0,
+                            Expiration = new DateTime(2024, 6, 11, 11, 10, 21, 105, DateTimeKind.Local).AddTicks(2189),
                             MinAmount = 40
                         },
                         new
@@ -304,6 +309,7 @@ namespace RedMango_API.Migrations
                             Id = 3,
                             Code = "50OFF",
                             DiscountAmount = 50.0,
+                            Expiration = new DateTime(2024, 6, 16, 11, 10, 21, 105, DateTimeKind.Local).AddTicks(2191),
                             MinAmount = 300
                         });
                 });
@@ -346,7 +352,7 @@ namespace RedMango_API.Migrations
                             Id = 1,
                             Category = "Appetizer",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/spring roll.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/spring roll.jpg",
                             Name = "Spring Roll",
                             Price = 7.9900000000000002,
                             SpecialTag = ""
@@ -356,7 +362,7 @@ namespace RedMango_API.Migrations
                             Id = 2,
                             Category = "Appetizer",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/idli.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/idli.jpg",
                             Name = "Idli",
                             Price = 8.9900000000000002,
                             SpecialTag = ""
@@ -366,7 +372,7 @@ namespace RedMango_API.Migrations
                             Id = 3,
                             Category = "Appetizer",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/pani puri.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/pani puri.jpg",
                             Name = "Panu Puri",
                             Price = 8.9900000000000002,
                             SpecialTag = "Best Seller"
@@ -376,7 +382,7 @@ namespace RedMango_API.Migrations
                             Id = 4,
                             Category = "Entrée",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/hakka noodles.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/hakka noodles.jpg",
                             Name = "Hakka Noodles",
                             Price = 10.99,
                             SpecialTag = ""
@@ -386,7 +392,7 @@ namespace RedMango_API.Migrations
                             Id = 5,
                             Category = "Entrée",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/malai kofta.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/malai kofta.jpg",
                             Name = "Malai Kofta",
                             Price = 12.99,
                             SpecialTag = "Top Rated"
@@ -396,7 +402,7 @@ namespace RedMango_API.Migrations
                             Id = 6,
                             Category = "Entrée",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/paneer pizza.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/paneer pizza.jpg",
                             Name = "Paneer Pizza",
                             Price = 11.99,
                             SpecialTag = ""
@@ -406,7 +412,7 @@ namespace RedMango_API.Migrations
                             Id = 7,
                             Category = "Entrée",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/paneer tikka.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/paneer tikka.jpg",
                             Name = "Paneer Tikka",
                             Price = 13.99,
                             SpecialTag = "Chef's Special"
@@ -416,7 +422,7 @@ namespace RedMango_API.Migrations
                             Id = 8,
                             Category = "Dessert",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/carrot love.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/carrot love.jpg",
                             Name = "Carrot Love",
                             Price = 4.9900000000000002,
                             SpecialTag = ""
@@ -426,7 +432,7 @@ namespace RedMango_API.Migrations
                             Id = 9,
                             Category = "Dessert",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/rasmalai.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/rasmalai.jpg",
                             Name = "Rasmalai",
                             Price = 4.9900000000000002,
                             SpecialTag = "Chef's Special"
@@ -436,7 +442,7 @@ namespace RedMango_API.Migrations
                             Id = 10,
                             Category = "Dessert",
                             Description = "Fusc tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
-                            Image = "https://fucorestaurantimages.blob.core.windows.net/redmango/sweet rolls.jpg",
+                            Image = "https://fucoredmangoimages.blob.core.windows.net/redmangoclient/sweet rolls.jpg",
                             Name = "Sweet Rolls",
                             Price = 3.9900000000000002,
                             SpecialTag = "Top Rated"
@@ -561,7 +567,7 @@ namespace RedMango_API.Migrations
                         {
                             Id = 1,
                             Comment = "Really Delicious!! I have never tried it before",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(329),
+                            CreatedAt = new DateTime(2024, 6, 9, 11, 10, 21, 105, DateTimeKind.Local).AddTicks(2224),
                             MenuItemId = 2,
                             Stars = 5,
                             UserId = "0d65520d-107f-440e-aa41-ed1f492c86ff"
@@ -570,7 +576,7 @@ namespace RedMango_API.Migrations
                         {
                             Id = 2,
                             Comment = "Yummy!! I love this food. It exceeded my expectations",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(351),
+                            CreatedAt = new DateTime(2024, 6, 9, 11, 10, 21, 105, DateTimeKind.Local).AddTicks(2226),
                             MenuItemId = 2,
                             Stars = 4,
                             UserId = "12b39b7b-ae91-437a-b939-56fdb95685f4"
@@ -579,7 +585,7 @@ namespace RedMango_API.Migrations
                         {
                             Id = 3,
                             Comment = "Great Food!!I love this food. It exceeded my expectations",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(353),
+                            CreatedAt = new DateTime(2024, 6, 9, 11, 10, 21, 105, DateTimeKind.Local).AddTicks(2228),
                             MenuItemId = 2,
                             Stars = 4,
                             UserId = "8d9dc5f6-ad81-4558-b5a8-84b3cf4bdca7"
@@ -588,7 +594,7 @@ namespace RedMango_API.Migrations
                         {
                             Id = 4,
                             Comment = "So Tasteful!! I will try again soon",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(354),
+                            CreatedAt = new DateTime(2024, 6, 9, 11, 10, 21, 105, DateTimeKind.Local).AddTicks(2229),
                             MenuItemId = 1,
                             Stars = 5,
                             UserId = "12b39b7b-ae91-437a-b939-56fdb95685f4"
@@ -597,7 +603,7 @@ namespace RedMango_API.Migrations
                         {
                             Id = 5,
                             Comment = "Worst than Vietnamese Food. Just a simple food",
-                            CreatedAt = new DateTime(2024, 4, 2, 9, 37, 11, 111, DateTimeKind.Local).AddTicks(355),
+                            CreatedAt = new DateTime(2024, 6, 9, 11, 10, 21, 105, DateTimeKind.Local).AddTicks(2231),
                             MenuItemId = 3,
                             Stars = 3,
                             UserId = "20b88091-8f9e-4778-a794-4efc3e16b112"

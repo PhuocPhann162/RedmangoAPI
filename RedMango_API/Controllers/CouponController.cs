@@ -111,6 +111,7 @@ namespace RedMango_API.Controllers
                 if(ModelState.IsValid)
                 {
                     Coupon coupon = _mapper.Map<Coupon>(couponDto);
+                    coupon.Expiration = DateTime.Now.AddDays(couponDto.Expiration);
                     _db.Coupons.Add(coupon);
                     await _db.SaveChangesAsync();
 
@@ -151,6 +152,7 @@ namespace RedMango_API.Controllers
                         return BadRequest(_response);
                     }
                     Coupon couponUpdate = _mapper.Map<Coupon>(couponDto);
+                    couponUpdate.Expiration = DateTime.Now.AddDays(couponDto.Expiration);
                     _db.Coupons.Update(couponUpdate);
                     await _db.SaveChangesAsync();
                     _response.Result = couponUpdate;

@@ -13,6 +13,7 @@ namespace RedMango_API.Controllers
 {
     [Route("api/User")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _db;

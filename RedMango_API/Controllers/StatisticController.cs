@@ -122,11 +122,87 @@ namespace RedMango_API.Controllers
             }
         }
 
-        [HttpGet("order")]
-        public async Task<ActionResult<ApiResponse>> GetOrderStatistic()
+        [HttpGet("orders")]
+        public async Task<ActionResult<ApiResponse>> GetOrdersStatistic(string type, int year, int month, int? endYear)
         {
             try
             {
+                List<OrderHeader> lstOrders = await _db.OrderHeader.ToListAsync();
+                if (type == "daily")
+                {
+                    int daysInMonth = DateTime.DaysInMonth(year, month);
+                    OrdersStatisticDTO ordersStatisticDTO = new()
+                    {
+                        DaysInMonth = daysInMonth,
+                        Label = "Daily Number Of Orders Statistic",
+                        OrdersData = new(),
+                    };
+
+                    for (int i = 1; i <= daysInMonth; i++)
+                    {
+                        DateTime currentDate = new DateTime(year, month, i);
+                        IEnumerable<OrderHeader> ordersFromDb = lstOrders.Where(u => u.OrderDate.Date == currentDate.Date);
+                        if (ordersFromDb.Count() > 0)
+                        {
+                            ordersStatisticDTO.OrdersData.Add(ordersFromDb.Count());
+                        }
+                        else
+                        {
+                            ordersStatisticDTO.OrdersData.Add(0);
+                        }
+                    }
+                    _response.StatusCode = HttpStatusCode.OK;
+                    _response.Result = ordersStatisticDTO;
+                    return Ok(_response);
+                }
+                else if (type == "monthly")
+                {
+                    OrdersStatisticDTO ordersStatisticDTO = new()
+                    {
+                        Label = "Monthly Number Of Orders Statistic",
+                        OrdersData = new(),
+                    };
+
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        IEnumerable<OrderHeader> ordersFromDb = lstOrders.Where(u => u.OrderDate.Date.Month == i && u.OrderDate.Date.Year == year);
+                        if (ordersFromDb.Count() > 0)
+                        {
+                            ordersStatisticDTO.OrdersData.Add(ordersFromDb.Count());
+                        }
+                        else
+                        {
+                            ordersStatisticDTO.OrdersData.Add(0);
+                        }
+                    }
+                    _response.StatusCode = HttpStatusCode.OK;
+                    _response.Result = ordersStatisticDTO;
+                    return Ok(_response);
+                }
+                else if (type == "yearly" && endYear.HasValue)
+                {
+                    OrdersStatisticDTO ordersStatisticDTO = new()
+                    {
+                        Label = "Yearly Number Of Orders Statistic",
+                        OrdersData = new(),
+                    };
+
+                    for (int i = year; i <= endYear; i++)
+                    {
+                        IEnumerable<OrderHeader> ordersFromDb = lstOrders.Where(u => u.OrderDate.Date.Year == i);
+                        if (ordersFromDb.Count() > 0)
+                        {
+                            ordersStatisticDTO.OrdersData.Add(ordersFromDb.Count());
+                        }
+                        else
+                        {
+                            ordersStatisticDTO.OrdersData.Add(0);
+                        }
+                    }
+                    _response.StatusCode = HttpStatusCode.OK;
+                    _response.Result = ordersStatisticDTO;
+                    return Ok(_response);
+                }
 
                 return Ok(_response);
             }

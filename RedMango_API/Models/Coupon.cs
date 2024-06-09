@@ -11,5 +11,6 @@ namespace RedMango_API.Models
         [Required]
         public double DiscountAmount { get; set; }
         public int MinAmount { get; set; }
+        public DateTime? Expiration { get; set; }
     }
 }

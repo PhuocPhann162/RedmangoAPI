@@ -81,7 +81,7 @@ namespace RedMango_API.Controllers
                     new Claim(ClaimTypes.Email, userFromDb.Email.ToString()),
                     new Claim(ClaimTypes.Role, roles.FirstOrDefault()),
                     }),
-                    Expires = DateTime.UtcNow.AddDays(7),
+                    Expires = DateTime.UtcNow.AddDays(10),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 };
 
