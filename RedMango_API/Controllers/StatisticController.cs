@@ -57,6 +57,7 @@ namespace RedMango_API.Controllers
                         }
                     }
                     _response.StatusCode = HttpStatusCode.OK;
+                    _response.StatusCode = HttpStatusCode.OK;
                     _response.Result = revenueStatisticDTO;
                     return Ok(_response);
                 }
